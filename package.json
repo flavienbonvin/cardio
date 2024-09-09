@@ -1,27 +1,27 @@
 {
-  "name": "cardio",
-  "version": "0.0.1",
-  "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro check && astro build",
-    "preview": "astro preview",
-    "pretty": "bunx prettier --write .",
-    "astro": "astro"
-  },
-  "dependencies": {
-    "@astrojs/db": "^0.14.1",
-    "@astrojs/vercel": "^7.8.0",
-    "astro": "^4.15.4",
-    "astro-icon": "^1.1.1"
-  },
-  "devDependencies": {
-    "@astrojs/check": "^0.9.3",
-    "@astrojs/tailwind": "^5.1.0",
-    "prettier": "^3.3.3",
-    "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-tailwindcss": "^0.6.6",
-    "tailwindcss": "^3.4.10",
-    "typescript": "^5.6.2"
-  }
+    "name": "cardio",
+    "version": "0.0.1",
+    "scripts": {
+        "dev": "astro dev",
+        "start": "astro dev",
+        "build": "astro check && astro build --remote",
+        "preview": "astro preview",
+        "pretty": "bunx prettier --write .",
+        "astro": "astro"
+    },
+    "dependencies": {
+        "@astrojs/db": "^0.14.1",
+        "@astrojs/vercel": "^7.8.0",
+        "astro": "^4.15.4",
+        "astro-icon": "^1.1.1"
+    },
+    "devDependencies": {
+        "@astrojs/check": "^0.9.3",
+        "@astrojs/tailwind": "^5.1.0",
+        "prettier": "^3.3.3",
+        "prettier-plugin-astro": "^0.14.1",
+        "prettier-plugin-tailwindcss": "^0.6.6",
+        "tailwindcss": "^3.4.10",
+        "typescript": "^5.6.2"
+    }
 }
