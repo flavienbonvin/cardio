@@ -1,0 +1,31 @@
+---
+import { getGameDetails } from "@data/gameScores";
+import AppLayout from "@layouts/AppLayout.astro";
+
+const { gameId } = Astro.params;
+if (!gameId || isNaN(+gameId)) {
+  return new Response("Not found", { status: 404 });
+}
+
+const scores = await getGameDetails(+gameId);
+---
+
+<AppLayout title="Game details">
+  <h1>Game details</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Winner</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        scores.map((score) => (
+          <tr>
+            <td>{score.winnerId}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</AppLayout>

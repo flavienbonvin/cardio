@@ -1,0 +1,25 @@
+<nav class="flex h-16 w-full items-center justify-between px-4 py-2">
+  <a href="/" class="text-lg">Cardio</a>
+  <div class="flex items-center gap-4">
+    <button>Create game</button>
+    <a href="/all-games" class="text-lg">All games</a>
+    <a href="/players" class="text-lg">Players</a>
+  </div>
+</nav>
+
+<script>
+  import { actions } from "astro:actions";
+
+  const button = document.querySelector("button");
+  button?.addEventListener("click", async () => {
+    const name = prompt("Enter game name");
+    if (!name) {
+      return;
+    }
+
+    await actions.games.createGameSession({
+      name,
+      gameId: 1,
+    });
+  });
+</script>

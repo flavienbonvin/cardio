@@ -1,16 +1,33 @@
 ---
+import { getRunningGamesData } from "@data/games";
+import AppLayout from "@layouts/AppLayout.astro";
 
+const games = await getRunningGamesData();
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <h1>Astro</h1>
-  </body>
-</html>
+<AppLayout title="Cardio">
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Players</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        games.map((game) => (
+          <tr>
+            <td>{game.name}</td>
+            <td>{game.status}</td>
+            <td>{game.players.length}</td>
+            <td>
+              <a href={`/games/${game.id}`}>Details</a>
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</AppLayout>

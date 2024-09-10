@@ -1,0 +1,35 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  type: "info" | "error";
+}
+
+const { type = "info" } = Astro.props;
+---
+
+<div
+  class:list={[
+    "rounded-md p-4",
+    type === "info" &&
+      "border-2 border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-500 dark:bg-blue-400 dark:text-stone-900",
+    type === "error" &&
+      "border-2 border-red-200 bg-red-50 text-red-700 dark:border-red-500 dark:bg-red-400 dark:text-stone-900",
+  ]}
+>
+  <div class="flex items-center gap-1">
+    <Icon
+      name={type === "info" ? "info" : "triangle-alert"}
+      class="h-4 w-4 shrink-0"
+    />
+    <p
+      class:list={[
+        "text-blue-700 dark:text-blue-200",
+        type === "info" && "text-blue-700 dark:text-blue-200",
+        type === "error" && "text-red-700 dark:text-red-200",
+      ]}
+    >
+      <slot />
+    </p>
+  </div>
+</div>
