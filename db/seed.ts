@@ -20,18 +20,22 @@ const generateScore = () => {
 // https://astro.build/db/seed
 export default async function seed() {
   await db.insert(Player).values([
-    { name: "John Doe", id: 1 },
-    { name: "Jane Doe", id: 2 },
+    { name: "John Doe", id: 1, createdAt: new Date(), updatedAt: new Date() },
+    { name: "Jane Doe", id: 2, createdAt: new Date(), updatedAt: new Date() },
   ]);
 
   await db.insert(Game).values([
     {
       id: 1,
       name: "Uno",
+      createdAt: new Date(),
+      updatedAt: new Date(),
     },
     {
       id: 2,
       name: "Deutio",
+      createdAt: new Date(),
+      updatedAt: new Date(),
     },
   ]);
 

@@ -1,0 +1,37 @@
+---
+import FormButton from "@components/FormButton.astro";
+import AppLayout from "@layouts/AppLayout.astro";
+import FormLayout from "@layouts/FormLayout.astro";
+---
+
+<AppLayout title="Cardio | Create player">
+  <FormLayout title="Create player">
+    <form class="flex flex-col gap-10">
+      <fieldset class="flex flex-col gap-2">
+        <label for="name">Name</label>
+        <input
+          id="name"
+          required
+          name="name"
+          placeholder="John Doe"
+          class="rounded-md border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:border-lime-400 focus:ring-lime-400 dark:border-stone-700 dark:bg-stone-800 dark:focus:border-lime-700 dark:focus:ring-lime-700"
+        />
+      </fieldset>
+      <FormButton>Save player</FormButton>
+    </form>
+  </FormLayout>
+</AppLayout>
+
+<script>
+  import { actions } from "astro:actions";
+  import { navigate } from "astro:transitions/client";
+
+  const form = document.querySelector("form");
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const { error } = await actions.players.createPlayer(formData);
+    if (!error) navigate("/players");
+  });
+</script>

@@ -4,6 +4,8 @@ export const Game = defineTable({
   columns: {
     id: column.number({ primaryKey: true }),
     name: column.text(),
+    createdAt: column.date(),
+    updatedAt: column.date(),
   },
 });
 
@@ -11,6 +13,8 @@ export const Player = defineTable({
   columns: {
     id: column.number({ primaryKey: true }),
     name: column.text(),
+    createdAt: column.date(),
+    updatedAt: column.date(),
   },
 });
 

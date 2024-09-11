@@ -1,0 +1,49 @@
+---
+import FormButton from "@components/FormButton.astro";
+import { getGame } from "@data/games";
+import AppLayout from "@layouts/AppLayout.astro";
+import FormLayout from "@layouts/FormLayout.astro";
+
+const { id } = Astro.params;
+if (!id || isNaN(+id)) {
+  return new Response("Not found", { status: 404 });
+}
+
+const game = await getGame(+id);
+if (!game) {
+  return new Response("Not found", { status: 404 });
+}
+---
+
+<AppLayout title="Cardio | Edit game">
+  <FormLayout title="Create game">
+    <form class="flex flex-col gap-10">
+      <fieldset class="flex flex-col gap-2">
+        <input type="hidden" name="id" value={id} />
+        <label for="name">Name</label>
+        <input
+          id="name"
+          required
+          name="name"
+          value={game?.name ?? "Uno"}
+          class="rounded-md border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:border-lime-400 focus:ring-lime-400 dark:border-stone-700 dark:bg-stone-800 dark:focus:border-lime-700 dark:focus:ring-lime-700"
+        />
+      </fieldset>
+      <FormButton>Update game</FormButton>
+    </form>
+  </FormLayout>
+</AppLayout>
+
+<script>
+  import { actions } from "astro:actions";
+  import { navigate } from "astro:transitions/client";
+
+  const form = document.querySelector("form");
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(form);
+    const { error } = await actions.games.editGame(formData);
+    if (!error) navigate("/games");
+  });
+</script>

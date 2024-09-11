@@ -1,27 +1,26 @@
-import { db, eq, GameSession, GameSessionPlayer } from "astro:db";
+import { db, eq, Game } from "astro:db";
 
-const getRunningGamesSession = async () => {
-  return await db
-    .select()
-    .from(GameSession)
-    .where(eq(GameSession.status, "running"));
+export const getAllGames = async () => {
+  return await db.select().from(Game);
 };
 
-const getPlayersForTheGame = async (gameId: number) => {
-  return await db
-    .select()
-    .from(GameSessionPlayer)
-    .where(eq(GameSessionPlayer.gameSessionId, gameId));
+export const createGame = async (name: string) => {
+  await db.insert(Game).values({
+    name: name,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  });
 };
 
-export const getRunningGamesData = async () => {
-  const games = await getRunningGamesSession();
-  const players = await Promise.all(
-    games.map(async ({ id }) => await getPlayersForTheGame(id)),
-  );
+export const deleteGame = async (id: number) => {
+  await db.delete(Game).where(eq(Game.id, id));
+};
 
-  return games.map((game, index) => ({
-    ...game,
-    players: players[index],
-  }));
+export const updateGame = async (id: number, name: string) => {
+  await db.update(Game).set({ name: name }).where(eq(Game.id, id));
+};
+
+export const getGame = async (id: number) => {
+  const [res] = await db.select().from(Game).where(eq(Game.id, id));
+  return res;
 };
