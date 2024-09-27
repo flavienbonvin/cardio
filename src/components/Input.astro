@@ -1,0 +1,10 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"input"> {}
+---
+
+<input
+  class="rounded-md border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:border-lime-400 focus:ring-lime-400 dark:border-stone-700 dark:bg-stone-800 dark:focus:border-lime-700 dark:focus:ring-lime-700"
+  {...Astro.props}
+/>

@@ -1,19 +1,19 @@
 ---
-import FormButton from "@components/FormButton.astro";
-import Input from "@components/Input.astro";
+import Alert from "@components/Alert.astro";
 import AppLayout from "@layouts/AppLayout.astro";
 import FormLayout from "@layouts/FormLayout.astro";
+
+const { id } = Astro.params;
+if (!id || isNaN(+id)) {
+  return new Response("Not found", { status: 404 });
+}
 ---
 
 <AppLayout title="Cardio | Create player">
   <FormLayout title="Create player">
-    <form class="flex flex-col gap-10">
-      <fieldset class="flex flex-col gap-2">
-        <label for="name">Name</label>
-        <Input id="name" name="name" placeholder="John Dow" required />
-      </fieldset>
-      <FormButton>Save player</FormButton>
-    </form>
+    <Alert type="info">
+      <p>This is not done yet</p>
+    </Alert>
   </FormLayout>
 </AppLayout>
 
@@ -27,8 +27,8 @@ import FormLayout from "@layouts/FormLayout.astro";
       event.preventDefault();
 
       const formData = new FormData(form);
-      const { error } = await actions.players.createPlayer(formData);
-      if (!error) navigate("/players");
+      const { error } = await actions.gameSessions.editGameSession(formData);
+      if (!error) navigate("/");
     });
   });
 </script>

@@ -1,19 +1,20 @@
 ---
 import FormButton from "@components/FormButton.astro";
-import Input from "@components/Input.astro";
-import { getRunningGames } from "@data/gameSession";
 import AppLayout from "@layouts/AppLayout.astro";
 import FormLayout from "@layouts/FormLayout.astro";
+
+const { id } = Astro.params;
+if (!id || isNaN(+id)) {
+  return new Response("Not found", { status: 404 });
+}
 ---
 
-<AppLayout title="Cardio | Create game">
-  <FormLayout title="Add a game">
-    <form class="flex flex-col gap-10">
-      <fieldset class="flex flex-col gap-2">
-        <label for="name">Name</label>
-        <Input id="name" name="name" placeholder="Uno" required />
-      </fieldset>
-      <FormButton>Save game</FormButton>
+<AppLayout title="Cardio | Delete player">
+  <FormLayout title="Are you sure?">
+    <p>Are you sure you want to delete this game session?</p>
+    <form>
+      <input type="hidden" name="id" value={id} />
+      <FormButton>Delete game session</FormButton>
     </form>
   </FormLayout>
 </AppLayout>
@@ -28,8 +29,11 @@ import FormLayout from "@layouts/FormLayout.astro";
       event.preventDefault();
 
       const formData = new FormData(form);
-      const { error } = await actions.games.createGame(formData);
-      if (!error) navigate("/games");
+      const { error, data } =
+        await actions.gameSessions.deleteGameSession(formData);
+      console.log(error, data);
+
+      if (!error) navigate("/");
     });
   });
 </script>

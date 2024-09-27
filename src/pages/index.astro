@@ -1,15 +1,69 @@
 ---
-import Alert from "@components/Alert.astro";
+import DataTableItem from "@components/DataTableItem.astro";
+import DataTableTitle from "@components/DataTableTitle.astro";
+import { getGame } from "@data/games";
+import { getRunningGames } from "@data/gameSession";
+import { getPlayersFromGameSession } from "@data/players";
 import AppLayout from "@layouts/AppLayout.astro";
+import DataTable from "@layouts/DataTable.astro";
+import { Icon } from "astro-icon/components";
+
+const runningGames = await getRunningGames();
+
+const gameSessionsData = [];
+for (const gameSession of runningGames) {
+  const game = await getGame(+gameSession.gameId);
+  const players = await getPlayersFromGameSession(gameSession.id);
+  gameSessionsData.push({
+    gameSession,
+    game,
+    players,
+  });
+}
 ---
 
 <AppLayout title="Cardio">
-  <div class="mt-10">
-    <Alert type="info">
-      <p>
-        This page is not done yet, but you can add your games and players
-        already.
-      </p>
-    </Alert>
-  </div>
-</AppLayout>
+  <DataTable
+    title="Game collection"
+    cta="Create game"
+    ctaLink="/create"
+    description="The running games"
+  >
+    <div slot="thead">
+      <DataTableTitle>Game session name</DataTableTitle>
+      <DataTableTitle>Game name</DataTableTitle>
+      <DataTableTitle>Players</DataTableTitle>
+      <DataTableTitle class="text-right">Actions</DataTableTitle>
+    </div>
+
+    <div slot="tbody">
+      {
+        gameSessionsData.map((gameSession) => (
+          <tr>
+            <DataTableItem>{gameSession.gameSession.name}</DataTableItem>
+            <DataTableItem>{gameSession.game.name}</DataTableItem>
+            <DataTableItem>{gameSession.players.length}</DataTableItem>
+            <DataTableItem>
+              <div class="flex justify-end gap-4">
+                <a
+                  href={`/${gameSession.gameSession.id}/edit`}
+                  class="flex cursor-pointer items-center gap-1 hover:underline"
+                >
+                  <Icon name="pencil" class="h-3 w-3" />
+                  Edit
+                </a>
+                <a
+                  href={`/${gameSession.gameSession.id}/delete`}
+                  class="flex cursor-pointer items-center gap-1 text-red-500 hover:underline dark:text-red-400"
+                >
+                  <Icon name="trash" class="h-3 w-3" />
+                  Delete
+                </a>
+              </div>
+            </DataTableItem>
+          </tr>
+        ))
+      }
+    </div>
+  </DataTable></AppLayout
+>

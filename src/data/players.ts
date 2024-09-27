@@ -1,4 +1,4 @@
-import { db, eq, Player } from "astro:db";
+import { and, db, eq, GameSessionPlayer, Player } from "astro:db";
 
 export const getAllPlayers = async () => {
   return await db.select().from(Player);
@@ -23,4 +23,17 @@ export const updatePlayer = async (id: number, name: string) => {
 export const getPlayer = async (id: number) => {
   const [res] = await db.select().from(Player).where(eq(Player.id, id));
   return res;
+};
+
+export const getPlayersFromGameSession = async (gameSessionId: number) => {
+  return await db
+    .select()
+    .from(Player)
+    .leftJoin(
+      GameSessionPlayer,
+      and(
+        eq(GameSessionPlayer.gameSessionId, gameSessionId),
+        eq(Player.id, GameSessionPlayer.playerId),
+      ),
+    );
 };
