@@ -1,4 +1,6 @@
 ---
+import ActionDelete from "@components/ActionDelete.astro";
+import ActionEdit from "@components/ActionEdit.astro";
 import DataTableItem from "@components/DataTableItem.astro";
 import DataTableTitle from "@components/DataTableTitle.astro";
 import { getGame } from "@data/games";
@@ -6,7 +8,6 @@ import { getRunningGames } from "@data/gameSession";
 import { getPlayersFromGameSession } from "@data/players";
 import AppLayout from "@layouts/AppLayout.astro";
 import DataTable from "@layouts/DataTable.astro";
-import { Icon } from "astro-icon/components";
 
 const runningGames = await getRunningGames();
 
@@ -45,20 +46,8 @@ for (const gameSession of runningGames) {
             <DataTableItem>{gameSession.players.length}</DataTableItem>
             <DataTableItem>
               <div class="flex justify-end gap-4">
-                <a
-                  href={`/${gameSession.gameSession.id}/edit`}
-                  class="flex cursor-pointer items-center gap-1 hover:underline"
-                >
-                  <Icon name="pencil" class="h-3 w-3" />
-                  Edit
-                </a>
-                <a
-                  href={`/${gameSession.gameSession.id}/delete`}
-                  class="flex cursor-pointer items-center gap-1 text-red-500 hover:underline dark:text-red-400"
-                >
-                  <Icon name="trash" class="h-3 w-3" />
-                  Delete
-                </a>
+                <ActionEdit href={`/${gameSession.gameSession.id}/edit`} />
+                <ActionDelete href={`/${gameSession.gameSession.id}/delete`} />
               </div>
             </DataTableItem>
           </tr>

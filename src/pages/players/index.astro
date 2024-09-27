@@ -1,10 +1,11 @@
 ---
+import ActionDelete from "@components/ActionDelete.astro";
+import ActionEdit from "@components/ActionEdit.astro";
 import DataTableItem from "@components/DataTableItem.astro";
 import DataTableTitle from "@components/DataTableTitle.astro";
 import { getAllPlayers } from "@data/players";
 import AppLayout from "@layouts/AppLayout.astro";
 import DataTable from "@layouts/DataTable.astro";
-import { Icon } from "astro-icon/components";
 
 const players = await getAllPlayers();
 ---
@@ -27,20 +28,8 @@ const players = await getAllPlayers();
             <DataTableItem>{player.name}</DataTableItem>
             <DataTableItem>
               <div class="flex justify-end gap-4">
-                <a
-                  href={`/players/${player.id}/edit`}
-                  class="flex cursor-pointer items-center gap-1 hover:underline"
-                >
-                  <Icon name="pencil" class="h-3 w-3" />
-                  Edit
-                </a>
-                <a
-                  href={`/players/${player.id}/delete`}
-                  class="flex cursor-pointer items-center gap-1 text-red-500 hover:underline dark:text-red-400"
-                >
-                  <Icon name="trash" class="h-3 w-3" />
-                  Delete
-                </a>
+                <ActionEdit href={`/players/${player.id}/edit`} />
+                <ActionDelete href={`/players/${player.id}/delete`} />
               </div>
             </DataTableItem>
           </tr>
