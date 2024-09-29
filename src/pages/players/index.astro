@@ -1,8 +1,10 @@
 ---
 import ActionDelete from "@components/ActionDelete.astro";
 import ActionEdit from "@components/ActionEdit.astro";
+import DataTableEmpty from "@components/DataTableEmpty.astro";
 import DataTableItem from "@components/DataTableItem.astro";
 import DataTableTitle from "@components/DataTableTitle.astro";
+import PageHeader from "@components/PageHeader.astro";
 import { getAllPlayers } from "@data/players";
 import AppLayout from "@layouts/AppLayout.astro";
 import DataTable from "@layouts/DataTable.astro";
@@ -11,30 +13,39 @@ const players = await getAllPlayers();
 ---
 
 <AppLayout title="Cardio | Players">
-  <DataTable
+  <PageHeader
     title="All players"
     cta="Create player"
     ctaLink="/players/create"
     description="You can create and edit all your saved players here."
-  >
-    <div slot="thead">
-      <DataTableTitle>Player name</DataTableTitle>
-      <DataTableTitle class="text-right">Actions</DataTableTitle>
-    </div>
-    <div slot="tbody">
-      {
-        players.map((player) => (
-          <tr>
-            <DataTableItem>{player.name}</DataTableItem>
-            <DataTableItem>
-              <div class="flex justify-end gap-4">
-                <ActionEdit href={`/players/${player.id}/edit`} />
-                <ActionDelete href={`/players/${player.id}/delete`} />
-              </div>
-            </DataTableItem>
-          </tr>
-        ))
-      }
-    </div>
-  </DataTable>
+  />
+  {
+    players.length > 0 ? (
+      <DataTable>
+        <div slot="thead">
+          <DataTableTitle>Player name</DataTableTitle>
+          <DataTableTitle class="text-right">Actions</DataTableTitle>
+        </div>
+        <div slot="tbody">
+          {players.map((player) => (
+            <tr>
+              <DataTableItem>{player.name}</DataTableItem>
+              <DataTableItem>
+                <div class="flex justify-end gap-4">
+                  <ActionEdit href={`/players/${player.id}/edit`} />
+                  <ActionDelete href={`/players/${player.id}/delete`} />
+                </div>
+              </DataTableItem>
+            </tr>
+          ))}
+        </div>
+      </DataTable>
+    ) : (
+      <DataTableEmpty
+        description="No players yet"
+        href="/players/create"
+        linkText="Create player"
+      />
+    )
+  }
 </AppLayout>

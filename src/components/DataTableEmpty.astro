@@ -1,0 +1,15 @@
+---
+import LinkInternal from "@components/LinkInternal.astro";
+import { Icon } from "astro-icon/components";
+interface Props {
+  description: string;
+  href: string;
+  linkText: string;
+}
+---
+
+<div class="mt-12 flex flex-col items-center justify-center gap-4">
+  <Icon name="squirell" class="h-12 w-12" />
+  <p class="text-center">{Astro.props.description}</p>
+  <LinkInternal href={Astro.props.href}>{Astro.props.linkText}</LinkInternal>
+</div>

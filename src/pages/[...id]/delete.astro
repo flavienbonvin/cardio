@@ -11,10 +11,10 @@ if (!id || isNaN(+id)) {
 
 <AppLayout title="Cardio | Delete player">
   <FormLayout title="Are you sure?">
-    <p>Are you sure you want to delete this game session?</p>
+    <p class="text-sm">Are you sure you want to delete this game session?</p>
     <form>
       <input type="hidden" name="id" value={id} />
-      <FormButton>Delete game session</FormButton>
+      <FormButton destructive>Delete game session</FormButton>
     </form>
   </FormLayout>
 </AppLayout>

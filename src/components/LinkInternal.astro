@@ -1,6 +1,12 @@
+---
+interface Props {
+  href: string;
+}
+---
+
 <a
   href={Astro.props.href}
-  class="rounded-md border border-lime-500 px-3 py-2 text-center text-sm font-semibold hover:bg-lime-50 dark:border-lime-200 dark:text-white dark:hover:bg-lime-950"
+  class="rounded-md border-2 border-lime-500 px-3 py-2 text-center text-sm font-semibold hover:bg-lime-50 dark:border-lime-700 dark:text-white dark:hover:bg-lime-950"
 >
   <slot /></a
 >

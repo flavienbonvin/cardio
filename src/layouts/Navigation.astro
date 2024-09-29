@@ -1,7 +1,22 @@
-<nav class="flex h-16 w-full items-center justify-between px-4 py-2">
-  <a href="/" class="text-lg">Cardio</a>
-  <div class="flex items-center gap-4">
-    <a href="/games" class="text-lg">Game collection</a>
-    <a href="/players" class="text-lg">Players</a>
-  </div>
+---
+import LinkNavigation from "@components/LinkNavigation.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<nav
+  class="mt-4 flex h-10 w-full items-center justify-between px-6 sm:mt-0 md:h-20"
+>
+  <a href="/">
+    <span class="flex items-center gap-1 text-lg font-semibold tracking-tight">
+      <Icon
+        name="flame"
+        class="h-7 w-7 rounded-full bg-gradient-to-bl from-red-500 to-orange-300 p-1 text-white"
+      />
+      cardio</span
+    >
+    <div class="flex items-center gap-4">
+      <LinkNavigation href="/games">Game collection</LinkNavigation>
+      <LinkNavigation href="/players">Players</LinkNavigation>
+    </div>
+  </a>
 </nav>

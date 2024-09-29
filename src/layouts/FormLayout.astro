@@ -2,15 +2,13 @@
 interface Props {
   title: string;
 }
-
-const { title } = Astro.props;
 ---
 
 <section
-  class="mx-auto flex max-w-xl flex-col gap-5 rounded-md border p-6 dark:border-stone-800"
+  class="mx-auto flex max-w-xl flex-col gap-5 rounded-md border-2 p-6 dark:border-stone-800"
 >
-  <h1 class="text-2xl font-semibold leading-6">
-    {title}
+  <h1 class="text-xl font-semibold leading-6 sm:text-2xl">
+    {Astro.props.title}
   </h1>
   <slot />
 </section>

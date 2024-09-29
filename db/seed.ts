@@ -8,11 +8,13 @@ import {
 } from "astro:db";
 
 const generateScore = () => {
-  return Array.from({ length: 10 }).map((_, index) => {
+  return Array.from({ length: 23 }).map((_, index) => {
     return {
       id: index,
       gameSessionId: 1,
       winnerId: Math.floor(Math.random() * 2) + 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     };
   });
 };

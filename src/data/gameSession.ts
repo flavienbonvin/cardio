@@ -1,24 +1,14 @@
 import { getGame } from "@data/games";
-import { getPlayer } from "@data/players";
-import { db, eq, GameSession, GameSessionPlayer, Score } from "astro:db";
+import {
+  createGameSessionPlayer,
+  deleteGameSessionPlayer,
+} from "@data/gameSessionPlayer";
+import { db, eq, GameSession, Score } from "astro:db";
 
 export enum GameSessionStatus {
   running = "running",
   finished = "finished",
 }
-
-export const createGameSessionPlayer = async (
-  gameSessionId: number,
-  playerId: number,
-) => {
-  const player = await getPlayer(playerId);
-  if (!player) return;
-
-  await db.insert(GameSessionPlayer).values({
-    gameSessionId,
-    playerId,
-  });
-};
 
 export const createGameSession = async (
   gameId: number,
@@ -45,9 +35,7 @@ export const createGameSession = async (
 };
 
 export const deleteGameSession = async (id: number) => {
-  await db
-    .delete(GameSessionPlayer)
-    .where(eq(GameSessionPlayer.gameSessionId, id));
+  await deleteGameSessionPlayer(id);
   await db.delete(Score).where(eq(Score.gameSessionId, id));
   await db.delete(GameSession).where(eq(GameSession.id, id));
 };

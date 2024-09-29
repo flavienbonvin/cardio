@@ -41,6 +41,8 @@ export const Score = defineTable({
     id: column.number({ primaryKey: true }),
     gameSessionId: column.number({ references: () => GameSession.columns.id }),
     winnerId: column.number({ references: () => Player.columns.id }),
+    createdAt: column.date(),
+    updatedAt: column.date(),
   },
 });
 
