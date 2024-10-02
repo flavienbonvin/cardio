@@ -1,0 +1,14 @@
+---
+import StepperStep from "@components/StepperStep.astro";
+
+interface Props {
+  step: number;
+}
+const { step } = Astro.props;
+---
+
+<div class="mb-12 flex justify-between gap-4">
+  <StepperStep number={1} active={step === 1}>Players</StepperStep>
+  <StepperStep number={2} active={step === 2}> Game</StepperStep>
+  <StepperStep number={3} active={step === 3}> Game session</StepperStep>
+</div>

@@ -1,0 +1,16 @@
+---
+import LinkInternal from "@components/LinkInternal.astro";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  href: string;
+}
+---
+
+<LinkInternal
+  class="float-end flex items-center gap-2 border-none bg-lime-50 text-end dark:bg-lime-950"
+  href={Astro.props.href}
+>
+  Next step
+  <Icon name="arrow-right" class="h-4 w-4" />
+</LinkInternal>

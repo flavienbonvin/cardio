@@ -1,4 +1,5 @@
 ---
+import FooterNavigation from "@layouts/FooterNavigation.astro";
 import { ViewTransitions } from "astro:transitions";
 import Navigation from "./Navigation.astro";
 
@@ -19,14 +20,18 @@ interface Props {
   </head>
 
   <body
-    class="containter mx-auto h-screen antialiased dark:bg-stone-900 dark:text-stone-200"
+    class="containter mx-auto flex h-screen flex-col antialiased dark:bg-stone-900 dark:text-stone-200"
   >
     <header>
       <Navigation />
     </header>
 
-    <section class="m-10">
+    <section class="m-10 grow">
       <slot />
     </section>
+
+    <footer>
+      <FooterNavigation />
+    </footer>
   </body>
 </html>

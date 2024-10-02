@@ -17,7 +17,7 @@ const scoreData = players
     player: Player,
     score: score.filter((s) => s.winnerId === Player.id).length,
   }))
-  .sort((a, b) => b.score - a.score);
+  .sort((a, b) => (b.player.name < a.player.name ? 1 : -1));
 ---
 
 <AppLayout title="Cardio | Game session score">
@@ -27,10 +27,10 @@ const scoreData = players
   />
 
   <div class="mt-8">
-    <p class="mb-3">
-      You played a total of {score.length} games. Here is the score:
+    <p class="mb-6">
+      You played a total of {score.length} games.
     </p>
-    <section class="flex gap-10">
+    <section class="flex flex-wrap gap-10">
       {
         scoreData.map(({ player, score }) => (
           <div class="w-60 rounded border-2 px-6 py-2">

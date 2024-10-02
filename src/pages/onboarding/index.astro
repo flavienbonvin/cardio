@@ -1,0 +1,44 @@
+---
+import OnboardingStepper from "@components/OnboardingStepper.astro";
+import AppLayout from "@layouts/AppLayout.astro";
+import FormButton from "@components/FormButton.astro";
+import Input from "@components/Input.astro";
+import FormLayout from "@layouts/FormLayout.astro";
+import LinkInternal from "@components/LinkInternal.astro";
+import { Icon } from "astro-icon/components";
+import OnboardingNextStep from "@components/OnboardingNextStep.astro";
+---
+
+<AppLayout title="Cardio | Onboarding">
+  <h1 class="mb-8 text-4xl font-bold">Welcome to cardio!</h1>
+  <p class="mb-6 text-lg font-semibold">
+    Let's set everything up so you can start playing!
+  </p>
+  <OnboardingStepper step={1} />
+  <FormLayout title="Create player">
+    <p class="text-sm">Let's create your first players!</p>
+    <form class="flex flex-col gap-10">
+      <fieldset class="flex flex-col gap-2">
+        <label for="name">Name</label>
+        <Input id="name" name="name" placeholder="John Dow" required />
+      </fieldset>
+      <FormButton>Save player</FormButton>
+    </form>
+  </FormLayout>
+  <OnboardingNextStep href="/onboarding/game" />
+</AppLayout>
+
+<script>
+  import { actions } from "astro:actions";
+
+  document.addEventListener("astro:page-load", () => {
+    const form = document.querySelector("form");
+    form?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+      const { error } = await actions.players.createPlayer(formData);
+      if (!error) form.reset();
+    });
+  });
+</script>

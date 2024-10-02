@@ -1,0 +1,21 @@
+---
+interface Props {
+  active: boolean;
+  number: number;
+}
+---
+
+<span
+  class:list={[
+    "flex w-full gap-2 rounded px-2 py-2 font-semibold tracking-tight",
+    Astro.props.active
+      ? "border border-lime-200 bg-lime-50 dark:border-lime-900 dark:bg-lime-950"
+      : "",
+  ]}
+>
+  <span
+    class="flex h-6 w-6 items-center justify-center rounded-full bg-lime-50 text-sm lg:h-10 lg:w-10 dark:bg-lime-800"
+    >{Astro.props.number}</span
+  >
+  <slot />
+</span>
