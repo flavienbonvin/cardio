@@ -1,30 +1,38 @@
 ---
 import OnboardingStepper from "@components/OnboardingStepper.astro";
-import AppLayout from "@layouts/AppLayout.astro";
 import FormButton from "@components/FormButton.astro";
 import Input from "@components/Input.astro";
 import FormLayout from "@layouts/FormLayout.astro";
 import OnboardingNextStep from "@components/OnboardingNextStep.astro";
+import OnboardingAppLayout from "@layouts/OnboardingAppLayout.astro";
+import { Icon } from "astro-icon/components";
 ---
 
-<AppLayout title="Cardio | Onboarding">
-  <h1 class="mb-8 text-4xl font-bold">Welcome to cardio!</h1>
-  <p class="mb-6 text-lg font-semibold">
-    Let's set everything up so you can start playing!
-  </p>
-  <OnboardingStepper step={2} />
-  <FormLayout title="Add a game">
-    <p class="text-sm">Add as many games as you want!</p>
-    <form class="flex flex-col gap-10">
-      <fieldset class="flex flex-col gap-2">
-        <label for="name">Name</label>
-        <Input id="name" name="name" placeholder="Uno" required />
-      </fieldset>
-      <FormButton>Save game</FormButton>
-    </form>
-  </FormLayout>
-  <OnboardingNextStep href="/onboarding/game-session" />
-</AppLayout>
+<OnboardingAppLayout title="Cardio | Onboarding">
+  <section class="mx-auto max-w-4xl">
+    <h1 class="mb-8 flex items-center gap-2 text-4xl font-bold">
+      Welcome to <Icon
+        name="flame"
+        class="h-8 w-8 rounded-full bg-gradient-to-bl from-red-500 to-orange-300 p-1 text-white"
+      /> cardio!
+    </h1>
+    <p class="mb-6 text-lg font-semibold">
+      Let's set everything up so you can start playing!
+    </p>
+    <OnboardingStepper step={2} />
+    <FormLayout title="Add a game">
+      <p class="text-sm">Add as many games as you want!</p>
+      <form class="flex flex-col gap-10">
+        <fieldset class="flex flex-col gap-2">
+          <label for="name">Name</label>
+          <Input id="name" name="name" placeholder="Uno" required />
+        </fieldset>
+        <FormButton>Save game</FormButton>
+      </form>
+      <OnboardingNextStep href="/onboarding/game-session" />
+    </FormLayout>
+  </section>
+</OnboardingAppLayout>
 
 <script>
   import { actions } from "astro:actions";

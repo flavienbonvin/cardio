@@ -1,66 +1,74 @@
 ---
 import OnboardingStepper from "@components/OnboardingStepper.astro";
-import AppLayout from "@layouts/AppLayout.astro";
 import FormButton from "@components/FormButton.astro";
 import Input from "@components/Input.astro";
 import { getAllGames } from "@data/games";
 import { getAllPlayers } from "@data/players";
 import FormLayout from "@layouts/FormLayout.astro";
+import OnboardingAppLayout from "@layouts/OnboardingAppLayout.astro";
+import { Icon } from "astro-icon/components";
 
 const games = await getAllGames();
 const players = await getAllPlayers();
 ---
 
-<AppLayout title="Cardio | Onboarding">
-  <h1 class="mb-8 text-4xl font-bold">Welcome to cardio!</h1>
-  <p class="mb-6 text-lg font-semibold">
-    Let's set everything up so you can start playing!
-  </p>
-  <OnboardingStepper step={3} />
-  <FormLayout title="Create game">
-    <p class="text-sm">Create your first game session!</p>
-    <form class="flex flex-col">
-      <fieldset class="mb-8 flex flex-col gap-2">
-        <label for="name">Name</label>
-        <Input id="name" name="name" placeholder="Iceland trip" required />
-      </fieldset>
-      <fieldset class="mb-8 flex flex-col gap-2">
-        <label for="game">Game</label>
-        <select
-          id="gameId"
-          name="gameId"
-          class="mt-2 w-full rounded-md border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:border-lime-400 focus:ring-lime-400 dark:border-stone-700 dark:bg-stone-800 dark:focus:border-lime-700 dark:focus:ring-lime-700"
-        >
-          <option value="" selected>Select a game</option>
-          {games.map((game) => <option value={game.id}>{game.name}</option>)}
-        </select>
-      </fieldset>
+<OnboardingAppLayout title="Cardio | Onboarding">
+  <section class="mx-auto max-w-4xl">
+    <h1 class="mb-8 flex items-center gap-2 text-4xl font-bold">
+      Welcome to <Icon
+        name="flame"
+        class="h-8 w-8 rounded-full bg-gradient-to-bl from-red-500 to-orange-300 p-1 text-white"
+      /> cardio!
+    </h1>
+    <p class="mb-6 text-lg font-semibold">
+      Let's set everything up so you can start playing!
+    </p>
+    <OnboardingStepper step={3} />
+    <FormLayout title="Create game">
+      <p class="text-sm">Create your first game session!</p>
+      <form class="flex flex-col">
+        <fieldset class="mb-8 flex flex-col gap-2">
+          <label for="name">Name</label>
+          <Input id="name" name="name" placeholder="Iceland trip" required />
+        </fieldset>
+        <fieldset class="mb-8 flex flex-col gap-2">
+          <label for="game">Game</label>
+          <select
+            id="gameId"
+            name="gameId"
+            class="mt-2 w-full rounded-md border border-stone-300 bg-stone-50 px-3 py-2 text-sm focus:border-lime-400 focus:ring-lime-400 dark:border-stone-700 dark:bg-stone-800 dark:focus:border-lime-700 dark:focus:ring-lime-700"
+          >
+            <option value="" selected>Select a game</option>
+            {games.map((game) => <option value={game.id}>{game.name}</option>)}
+          </select>
+        </fieldset>
 
-      <p class="mb-4 text-xl font-semibold">Players</p>
-      <div class="relative mb-10 flex flex-col items-start">
-        {
-          players.map((player) => (
-            <fieldset class="flex h-6 items-center">
-              <input
-                id={player.id.toString()}
-                value={player.id}
-                name="playerIds"
-                type="checkbox"
-                class="h-4 w-4 rounded border border-stone-300 bg-stone-50 text-lime-400 accent-lime-400 focus:border-lime-400 focus:ring-lime-400 dark:border-stone-700 dark:bg-stone-800 dark:text-lime-700 dark:accent-lime-700 dark:focus:border-lime-700 dark:focus:ring-lime-700"
-              />
-              <div class="ml-3 text-sm leading-6">
-                <label for="playerIds" class="font-medium">
-                  {player.name}
-                </label>
-              </div>
-            </fieldset>
-          ))
-        }
-      </div>
-      <FormButton>Save game</FormButton>
-    </form>
-  </FormLayout>
-</AppLayout>
+        <p class="mb-4 text-xl font-semibold">Players</p>
+        <div class="relative mb-10 flex flex-col items-start">
+          {
+            players.map((player) => (
+              <fieldset class="flex h-6 items-center">
+                <input
+                  id={player.id.toString()}
+                  value={player.id}
+                  name="playerIds"
+                  type="checkbox"
+                  class="h-4 w-4 rounded border border-stone-300 bg-stone-50 text-lime-400 accent-lime-400 focus:border-lime-400 focus:ring-lime-400 dark:border-stone-700 dark:bg-stone-800 dark:text-lime-700 dark:accent-lime-700 dark:focus:border-lime-700 dark:focus:ring-lime-700"
+                />
+                <div class="ml-3 text-sm leading-6">
+                  <label for="playerIds" class="font-medium">
+                    {player.name}
+                  </label>
+                </div>
+              </fieldset>
+            ))
+          }
+        </div>
+        <FormButton>Save game</FormButton>
+      </form>
+    </FormLayout>
+  </section>
+</OnboardingAppLayout>
 
 <script>
   import { actions } from "astro:actions";
