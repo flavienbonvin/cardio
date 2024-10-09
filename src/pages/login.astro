@@ -1,0 +1,46 @@
+---
+import FormButton from "@components/FormButton.astro";
+import Input from "@components/Input.astro";
+import AppLayout from "@layouts/AppLayout.astro";
+import FormLayout from "@layouts/FormLayout.astro";
+
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    const password = data.get("password");
+
+    if (password === import.meta.env.APP_PASSWORD) {
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 7);
+
+      return new Response(null, {
+        status: 302,
+        headers: {
+          Location: "/",
+          "Set-Cookie": `password=true; path=/; expires=${expirationDate.toUTCString()}`,
+        },
+      });
+    } else {
+      return new Response("Invalid password", { status: 401 });
+    }
+  } catch (error) {}
+}
+---
+
+<AppLayout title="Login" contentOnly>
+  <FormLayout title="Login">
+    <form method="POST" class="flex flex-col">
+      <fieldset class="mb-8 flex flex-col gap-2">
+        <label for="password">Password</label>
+        <Input
+          id="password"
+          name="password"
+          placeholder="Application password"
+          type="password"
+          required
+        />
+      </fieldset>
+      <FormButton>Login</FormButton>
+    </form>
+  </FormLayout>
+</AppLayout>

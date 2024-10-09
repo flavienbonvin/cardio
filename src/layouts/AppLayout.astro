@@ -4,8 +4,11 @@ import { ViewTransitions } from "astro:transitions";
 import Navigation from "./Navigation.astro";
 
 interface Props {
+  contentOnly?: boolean;
   title: string;
 }
+
+const { contentOnly = false, title } = Astro.props;
 ---
 
 <html lang="en">
@@ -14,7 +17,7 @@ interface Props {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <title>{Astro.props.title}</title>
+    <title>{title}</title>
 
     <ViewTransitions />
   </head>
@@ -22,16 +25,16 @@ interface Props {
   <body
     class="containter mx-auto flex h-screen flex-col antialiased dark:bg-stone-900 dark:text-stone-200"
   >
-    <header>
+    {!contentOnly && <header>
       <Navigation />
-    </header>
+    </header>}
 
     <section class="m-10 grow">
       <slot />
     </section>
 
-    <footer>
+    {!contentOnly && <footer>
       <FooterNavigation />
-    </footer>
+    </footer>}
   </body>
 </html>
