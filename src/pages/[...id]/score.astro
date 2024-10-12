@@ -36,7 +36,7 @@ const finalPlayers = scoreData
 
   <div class="mt-8">
     <p class="mb-6">
-      You played a total of {score.length} games.
+      You played a total of <span id="total-score">{score.length}</span> games.
     </p>
     <section class="flex flex-wrap gap-10">
       {
@@ -53,7 +53,7 @@ const finalPlayers = scoreData
                   <Icon name="minus" class="h-6 w-6" />
                 </button>
               </form>
-              <p>{score}</p>
+              <p id={`player-${player.id}-score`}>{score}</p>
               <form>
                 <button class="flex h-12 w-12 items-center justify-center rounded border-2 border-lime-400 hover:bg-lime-50 sm:h-8 sm:w-8 dark:border-lime-700 dark:text-white dark:hover:bg-lime-950">
                   <input type="hidden" name="gameSessionId" value={id} />
@@ -73,6 +73,73 @@ const finalPlayers = scoreData
   import { actions } from "astro:actions";
   import { navigate } from "astro:transitions/client";
 
+  const storeScoreLocally = (formData: FormData) => {
+    const dataToSave = {
+      gameSessionId: formData.get("gameSessionId"),
+      playerIdPlus: formData.get("playerIdPlus"),
+      playerIdMinus: formData.get("playerIdMinus"),
+      scoreDate: new Date(),
+    };
+
+    const data = JSON.parse(localStorage.getItem("score") || "[]");
+    data.push(dataToSave);
+    localStorage.setItem("score", JSON.stringify(data));
+  };
+
+  const updateUI = (formData: FormData, actionType: "plus" | "minus") => {
+    const ID = actionType === "plus" ? "playerIdPlus" : "playerIdMinus";
+    const playerId = formData.get(ID);
+
+    const totalScore = document.getElementById("total-score");
+    if (totalScore) {
+      const currentScore = parseInt(totalScore.innerHTML);
+      totalScore.innerHTML =
+        actionType === "plus" ? `${currentScore + 1}` : `${currentScore - 1}`;
+    }
+
+    const score = document.getElementById(`player-${playerId}-score`);
+    if (score) {
+      const currentScore = parseInt(score.innerHTML);
+      score.innerHTML =
+        actionType === "plus" ? `${currentScore + 1}` : `${currentScore - 1}`;
+    }
+  };
+
+  const syncLocalScore = () => {
+    const data = JSON.parse(localStorage.getItem("score") || "[]");
+    const formattedForSync = data.map((data: any) => {
+      return {
+        ...data,
+        gameSessionId: +data.gameSessionId,
+        playerIdPlus: +data.playerIdPlus,
+        playerIdMinus: +data.playerIdMinus,
+      };
+    });
+    return actions.score.sync(formattedForSync);
+  };
+
+  const handleSubmission = async (
+    formData: FormData,
+    actionType: "plus" | "minus",
+  ) => {
+    if (navigator.onLine) {
+      if (localStorage.getItem("score")) {
+        const { error } = await syncLocalScore();
+        if (!error) {
+          localStorage.removeItem("score");
+        } else {
+          // TODO handle error
+        }
+      }
+
+      const { error } = await actions.score[actionType](formData);
+      if (!error) navigate(window.location.pathname);
+    } else {
+      storeScoreLocally(formData);
+      updateUI(formData, actionType);
+    }
+  };
+
   document.addEventListener("astro:page-load", () => {
     const forms = document.querySelectorAll("form");
     forms.forEach((form) => {
@@ -80,13 +147,9 @@ const finalPlayers = scoreData
         event.preventDefault();
 
         const formData = new FormData(form);
-        if (formData.get("playerIdPlus")) {
-          const { error } = await actions.score.plus(formData);
-          if (!error) navigate(window.location.pathname);
-        } else if (formData.get("playerIdMinus")) {
-          const { error } = await actions.score.minus(formData);
-          if (!error) navigate(window.location.pathname);
-        }
+        const actionType = formData.get("playerIdPlus") ? "plus" : "minus";
+
+        handleSubmission(formData, actionType);
       });
     });
   });

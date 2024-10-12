@@ -10,12 +10,13 @@ export const getGameSessionScore = async (gameSessionId: number) => {
 export const increaseScore = async (
   gameSessionId: number,
   winnerId: number,
+  date?: Date,
 ) => {
   await db.insert(Score).values({
     winnerId,
     gameSessionId,
-    createdAt: new Date(),
-    updatedAt: new Date(),
+    createdAt: date ?? new Date(),
+    updatedAt: date ?? new Date(),
   });
 };
 
