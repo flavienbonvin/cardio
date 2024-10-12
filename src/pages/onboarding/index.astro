@@ -22,7 +22,7 @@ import { Icon } from "astro-icon/components";
     <OnboardingStepper step={1} />
     <FormLayout title="Create player">
       <p class="text-sm">Let's create your first players!</p>
-      <form class="flex flex-col gap-10">
+      <form class="flex flex-col gap-10" id="player-form">
         <fieldset class="flex flex-col gap-2">
           <label for="name">Name</label>
           <Input id="name" name="name" placeholder="John Dow" required />
@@ -38,7 +38,7 @@ import { Icon } from "astro-icon/components";
   import { actions } from "astro:actions";
 
   document.addEventListener("astro:page-load", () => {
-    const form = document.querySelector("form");
+    const form = document.getElementById("player-form") as HTMLFormElement;
     form?.addEventListener("submit", async (event) => {
       event.preventDefault();
 

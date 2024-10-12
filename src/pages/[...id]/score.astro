@@ -33,22 +33,22 @@ const scoreData = players
     <section class="flex flex-wrap gap-10">
       {
         scoreData.map(({ player, score }) => (
-          <div class="w-60 rounded border-2 px-6 py-2">
+          <div class="w-full rounded border-2 px-6 py-2 sm:w-60">
             <h2 class="text-center text-xl font-semibold">{player.name}</h2>
             <div class="mt-8 flex items-center justify-between text-xl font-bold">
               <form>
-                <button class="flex h-8 w-8 items-center justify-center rounded border-2 border-red-400 hover:bg-red-50 dark:border-red-700 dark:text-white dark:hover:bg-red-950">
+                <button class="flex h-12 w-12 items-center justify-center rounded border-2 border-red-400 hover:bg-red-50 sm:h-8 sm:w-8 dark:border-red-700 dark:text-white dark:hover:bg-red-950">
                   <input type="hidden" name="gameSessionId" value={id} />
                   <input type="hidden" name="playerIdMinus" value={player.id} />
-                  <Icon name="minus" class="h-4 w-4" />
+                  <Icon name="minus" class="h-6 w-6" />
                 </button>
               </form>
               <p>{score}</p>
               <form>
-                <button class="flex h-8 w-8 items-center justify-center rounded border-2 border-lime-400 hover:bg-lime-50 dark:border-lime-700 dark:text-white dark:hover:bg-lime-950">
+                <button class="flex h-12 w-12 items-center justify-center rounded border-2 border-lime-400 hover:bg-lime-50 sm:h-8 sm:w-8 dark:border-lime-700 dark:text-white dark:hover:bg-lime-950">
                   <input type="hidden" name="gameSessionId" value={id} />
                   <input type="hidden" name="playerIdPlus" value={player.id} />
-                  <Icon name="plus" class="h-4 w-4" />
+                  <Icon name="plus" class="h-6 w-6" />
                 </button>
               </form>
             </div>

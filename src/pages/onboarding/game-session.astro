@@ -26,7 +26,7 @@ const players = await getAllPlayers();
     <OnboardingStepper step={3} />
     <FormLayout title="Create game">
       <p class="text-sm">Create your first game session!</p>
-      <form class="flex flex-col">
+      <form class="flex flex-col" id="game-session-form">
         <fieldset class="mb-8 flex flex-col gap-2">
           <label for="name">Name</label>
           <Input id="name" name="name" placeholder="Iceland trip" required />
@@ -75,13 +75,14 @@ const players = await getAllPlayers();
   import { navigate } from "astro:transitions/client";
 
   document.addEventListener("astro:page-load", () => {
-    const form = document.querySelector("form");
+    const form = document.getElementById(
+      "game-session-form",
+    ) as HTMLFormElement;
+
     form?.addEventListener("submit", async (event) => {
       event.preventDefault();
 
       const formData = new FormData(form);
-      console.log(formData.getAll("playerIds"));
-
       const { error } = await actions.gameSessions.createGameSession(formData);
       if (!error) navigate("/");
     });
