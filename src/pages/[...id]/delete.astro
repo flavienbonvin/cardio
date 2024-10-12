@@ -29,9 +29,7 @@ if (!id || isNaN(+id)) {
       event.preventDefault();
 
       const formData = new FormData(form);
-      const { error, data } =
-        await actions.gameSessions.deleteGameSession(formData);
-      console.log(error, data);
+      const { error } = await actions.gameSessions.deleteGameSession(formData);
 
       if (!error) navigate("/");
     });

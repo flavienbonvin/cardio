@@ -29,8 +29,8 @@ if (!id || isNaN(+id)) {
       event.preventDefault();
 
       const formData = new FormData(form);
-      const { error, data } = await actions.players.deletePlayer(formData);
-      console.log(error, data);
+      const { error } = await actions.players.deletePlayer(formData);
+      console.log(error);
 
       if (!error) navigate("/players");
     });

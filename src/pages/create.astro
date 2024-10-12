@@ -65,8 +65,6 @@ const players = await getAllPlayers();
       event.preventDefault();
 
       const formData = new FormData(form);
-      console.log(formData.getAll("playerIds"));
-
       const { error } = await actions.gameSessions.createGameSession(formData);
       if (!error) navigate("/");
     });
